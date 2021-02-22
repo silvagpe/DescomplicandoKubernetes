@@ -1348,7 +1348,11 @@ Feito isso, execute o seguinte comando.
 ```
 kubectl completion bash > /etc/bash_completion.d/kubectl
 ```
-
+Opção 2
+```
+source /etc/bash_completion
+source <(kubectl completion bash)
+```
 Efetue *logoff* e *login* para carregar o *autocomplete*. Caso não deseje, execute:
 
 ```
