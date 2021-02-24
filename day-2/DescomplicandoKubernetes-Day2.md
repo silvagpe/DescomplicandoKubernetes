@@ -183,10 +183,10 @@ metadata:
   namespace: default
 spec:
   ports:
-  - port: 80
+  - port: 80   #porta externa do pod
     protocol: TCP
-    targetPort: 80
-  selector:
+    targetPort: 80  # porta interna do pod (serviço interno)
+  selector:  # para qual deployment ele está rodando
     run: nginx
   type: ClusterIP
 ```
@@ -365,7 +365,7 @@ metadata:
 spec:
   externalTrafficPolicy: Cluster
   ports:
-  - nodePort: 31111
+  - nodePort: 31111  # porta do node somente portas no range de 30.000 até 32.676
     port: 80
     protocol: TCP
     targetPort: 80

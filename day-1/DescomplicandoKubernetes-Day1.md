@@ -1157,6 +1157,31 @@ kubeadm join --token 39c341.a3bc3c4dd49758d5 IP_DO_MASTER:6443 --discovery-token
 ...
 ```
 
+### Como dar permissão de sudo
+Subir para o nível de su
+
+```
+su -
+```
+
+Instalar o sudo 
+```
+apt-get install sudo -y
+```
+
+Dar permissão para o grupo
+```
+usermod -aG sudo yourusername
+```
+
+Conferir o arquivo /etc/sudoers
+```
+# Allow members of group sudo to execute any command
+%sudo   ALL=(ALL:ALL) ALL
+```
+
+
+
 Caso o servidor possua mais de uma interface de rede, você pode verificar se o IP interno do nó do seu cluster corresponde ao IP da interface esperada com o seguinte comando:
 
 ```
@@ -1864,3 +1889,21 @@ kubectl delete service nginx
 ```
 
 Liste novamente os recursos para ver se os mesmos ainda estão presentes.
+
+
+Como eu posso criar um service para um deployment em execução?
+```
+kubectl expose deployment/nome_do_deployment
+```
+
+```
+# Export uma porta
+kubectl expose pod nginx --port 80 --type NodePort
+
+# Consultar os logs
+kubectl logs -f nginx
+
+# Entrar no pod
+kubectl exec -ti nginx sh
+```
+
