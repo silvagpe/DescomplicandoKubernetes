@@ -657,6 +657,8 @@ Visualizando o endpoint no formato YAML.
 
 ```
 kubectl get endpoints -o yaml
+```
+```yaml
 
 apiVersion: v1
 items:
