@@ -38,4 +38,6 @@ Conferir o arquivo /etc/sudoers
 ```
 source /etc/bash_completion
 source <(kubectl completion bash)
+
+echo "source <(kubectl completion bash)" >> ~/.bashrc
 ```

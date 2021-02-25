@@ -870,6 +870,10 @@ NAME                     CPU(cores)   MEMORY(bytes)
 nginx-85f7fb6b45-b6dsk   201m         226Mi
 ```
 
+kubectl get pods --all-namespaces |grep metrics
+
+
+
 # Namespaces
 
 No kubernetes temos um cara chamado de Namespaces como já vimos anteriormente.
