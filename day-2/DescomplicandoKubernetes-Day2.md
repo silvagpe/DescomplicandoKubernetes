@@ -1117,8 +1117,9 @@ Visualizando as labels Taints do node ``master``:
 ```
 kubectl describe node elliot-01 | grep -i taint
 
-Taints:             node-role.kubernetes.io/master:NoSchedule
+Taints:             node-role.kubernetes.io/master:NoSchedule 
 ```
+**O Taint ...:NoSchedule diz que o nó não vai permitir receber containers**
 
 **Vamos testar algumas coisas e permitir que o nó master rode outros pods.**
 
