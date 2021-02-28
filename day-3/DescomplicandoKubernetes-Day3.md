@@ -372,6 +372,8 @@ As Labels são utilizadas para a organização do cluster, vamos listar nossos p
 
 Primeiro vamos realizar uma pesquisa utilizando as labels ``dc=UK`` e ``dc=Netherlands``:
 
+## Pesquisando pela label
+
 Pesquisando pela label ``UK``:
 
 ```
@@ -391,6 +393,14 @@ segundo-deployment-59db86c584-cf9pp 1/1   Running   0          4m
 ```
 
 Caso queira uma saída mais personalizada podemos listar da seguinte forma, veja:
+
+## Listando todas as opções de labels
+
+```
+kubectl label (tab tab)
+```
+
+## Listando com coluna de label
 
 ```
 kubectl get pod -L dc
@@ -619,6 +629,18 @@ terceiro-deployment-5..  1/1    Running   0         14m   elliot-02
 ```
 
 Com certeza, esse pod foi criado no node ``elliot-03``, pois havíamos dito que ele possuía essa label anteriormente.
+
+## Remover os labels 
+
+### Removendo de todos os nodes
+
+```
+kubectl label nodes <label_name>- --all
+kubectl label nodes dc- --all
+kubectl label nodes disk- --all
+```
+
+
 
 # ReplicaSet
 
@@ -920,6 +942,8 @@ kubectl delete rs replica-set-primeiro
 replicaset.apps "replica-set-primeiro" deleted
 ```
 
+
+
 # DaemonSet
 
 **DaemonSet** é basicamente a mesma coisa do que o ReplicaSet, com a diferença que quando você utiliza o DaemonSet você não especifica o número de réplicas, ele subirá um pod por node em seu cluster.
@@ -1131,6 +1155,13 @@ kubectl describe pod daemon-set-primeiro-jl6f5 | grep -i image:
     Image:          nginx:1.7.9
 ```
 
+### Alterando a imagem do daemon
+```
+ kubectl set image ds daemon-set-primeiro nginx=nginx:1.15.0
+```
+
+
+
 Como podemos observar, para atualizar todos os pods do DaemonSet precisamos recriá-lo ou destruir todos os pods relacionado a ele, mas isso não é muito ruim? Sim, é bem ruim. Para melhorar nossas vidas temos a opção ``RollingUpdate`` que vamos ver no próximo capítulo.
 
 # Rollouts e Rollbacks
@@ -1280,6 +1311,9 @@ Crie o DaemonSet:
 kubectl create -f primeiro-daemonset.yaml
 
 daemonset.extensions/daemon-set-primeiro created
+
+# Para gerar uma saída como yaml
+kubectl get daemonsets.apps daemon-set-primeiro -o yaml
 ```
 
 Sucesso, vamos verificar se nosso DaemonSet foi inicializado certinho.

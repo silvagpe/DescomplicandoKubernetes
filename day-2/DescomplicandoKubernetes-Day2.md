@@ -1450,11 +1450,32 @@ kubectl describe node elliot-01 | grep -i taint
 Taints:             <none>
 ```
 
+```bash
+# Recuperar os taints do nó elliot-01
+kubectl describe nodes elliot-01 | grep -i taint
+#Taints:             node-role.kubernetes.io/master:NoSchedule
+
+# Recuperar os taints dos nós
+ kubectl describe nodes  | grep -i taints
+
+#Remove a marcação de NoSchedule permitindo que o nó receba pods
+kubectl taint node elliot-01 node-role.kubernetes.io/master:NoSchedule-
+
+#Adiciona a marcação para não permitir que o nó receba PODS
+kubectl taint node elliot-01 node-role.kubernetes.io/master:NoSchedule
+
+# Adiciona a marcação que o nó não executa nenhum pod, isso faz com que os pods seja remanejados para outros nodes
+kubectl taint node all key1=value1:NoExecute
+```
+
+
+
 # Colocando o nó em modo de manutenção
 
 Para colocar o nó em manutenção iremos utilizar o ``cordon``.
 
-```
+```bash
+#Coloca um nó em manutenção
 kubectl cordon elliot-02
 
 node/elliot-02 cordoned
@@ -1474,7 +1495,8 @@ elliot-03   Ready                       <none>   7d14h   v1.18.2
 Repare que o nó ``elliot-02`` ficou com o status ``Ready,SchedulingDisabled``, agora você pode fazer a manutenção no seu node tranquilamente.
 Para retirar nó de modo de manutenção, iremos utilizar o ``uncordon``.
 
-```
+```bash
+# remove a manutenção
 kubectl uncordon elliot-02
 
 node/elliot-02 uncordoned
