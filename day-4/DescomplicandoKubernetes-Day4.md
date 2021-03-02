@@ -253,7 +253,16 @@ spec:
     storage: 1Gi
   accessModes:
   - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
+  #- ReadWriteMany # vários podem montar e usar esse volume
+  #- ReadWriteOnce # apenas um pode excrever nesse volume
+  #- ReadOlnyMany # vários podem ler esse volume
+
+
+  # 'Retain' quando apagar o claim nada acontece com o volume
+  # 'Delete' quanddo apagar o claim o volume também é apagado
+  # 'Recycle' reseta o PV para ser usado novamente
+  persistentVolumeReclaimPolicy: Retain  
+  
   nfs:
     path: /opt/dados
     server: 10.138.0.2
@@ -368,9 +377,9 @@ metadata:
   name: nginx
   namespace: default
 spec:
-  progressDeadlineSeconds: 600
-  replicas: 1
-  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600 #tempo para esperar um deploy com sucesso
+  replicas: 1  # quantidade de replicas
+  revisionHistoryLimit: 10 # quantidade de rollbacks (revisões)
   selector:
     matchLabels:
       run: nginx

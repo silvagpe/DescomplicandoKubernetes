@@ -228,3 +228,24 @@ kubectl rollout history deployment giropops-v2
 ---
 
 
+### Para definir uma estratégia de updade
+```yaml
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 10
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: giropops
+  strategy:
+    rollingUpdate:
+      maxSurge: 25% # máximo de pods que podem subir acima do limite de replicas durante o processo de update. Exemplo: 10 replicas, pode subir até 12
+      maxUnavailable: 25% # Qual o máximo de replicas inacessíveis durante o processo de atualização
+    type: RollingUpdate
+```
+
+Para pegar o status de uma atualização
+```
+ kubectl rollout status deployment giropops-v2
+```
+
