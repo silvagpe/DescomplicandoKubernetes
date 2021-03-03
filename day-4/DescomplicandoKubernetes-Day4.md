@@ -589,7 +589,19 @@ kind: CronJob
 metadata:
   name: giropops-cron
 spec:
-  schedule: "*/1 * * * *"
+  #minuto hora dia mes dia-da-semana comando
+  #minuto: 0-59
+  #hora: 0-23
+  #dia: 1-31
+  #mes: 1-12
+  #dia-da-semana:0-7
+  
+  ## Formatações curigas
+  #*/1 seria a cada 1 minuto
+  #1,2 pode ser na hora 1 e na hora 2
+  #1-10 do dia primeiro até o dia 10 
+
+  schedule: "*/1 * * * *"  # cada 1 minuto rodar esse comando
   jobTemplate:
     spec:
       template:
