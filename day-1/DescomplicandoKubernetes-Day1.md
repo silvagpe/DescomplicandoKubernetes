@@ -1105,14 +1105,14 @@ Os comandos a seguir desativam o *firewall*, instalam os pacotes do k8s e ativam
 # systemctl enable kubelet && systemctl start kubelet
 ```
 
-Ainda em distribuições Red Hat e baseadas, é necessário a configuração de alguns parâmetros extras no kernel por meio do **sysctl**. Estes podem ser setados criando o arquivo ``/etc/sysctl.d/k8s.conf`` com o seguinte conteúdo.
+Ainda em distribuições *Red Hat* e baseadas, é necessário a configuração de alguns parâmetros extras no kernel por meio do **sysctl**. Estes podem ser setados criando o arquivo ``/etc/sysctl.d/k8s.conf`` com o seguinte conteúdo.
 
 ```
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 ```
 
-Em ambas distribuições GNU/Linux também é necessário desativar a memória swap em todos os nós com o comando a seguir.
+Em *ambas distribuições* GNU/Linux também é necessário desativar a memória swap em todos os nós com o comando a seguir.
 
 ```
 # swapoff -a
@@ -1223,8 +1223,10 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 Para inserir os nós *workers* no *cluster*, basta executar a linha que começa com ``kubeadm join`` nos mesmos.
 
-### Múltiplas Interfaces
 
+------------------------------
+### Múltiplas Interfaces
+------------------------------
 Caso algum dos nós que será utilizado tenha mais de uma interface de rede, verifique se ele consegue alcançar o `service` do `Kubernetes` através da rota padrão.
 
 Para verificar, será necessário pegar o IP interno do `service` Kubernetes através do comando ``kubectl get services kubernetes``. Após obter o IP, basta ir no nó que será ingressado no cluster e rodar o comando ``curl -k https://SERVICE`` alterando o `SERVICE` para o IP do `service`. Exemplo: ``curl -k https://10.96.0.1``.

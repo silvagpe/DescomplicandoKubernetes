@@ -684,6 +684,9 @@ Agora vamos ver esse ``cron`` funcionando através do comando ``kubectl get`` ju
 ```
 kubectl get jobs --watch
 
+# alternativa para o comando acima
+kubectl get jobs.batch --watch
+
 NAME                       DESIRED  SUCCESSFUL   AGE
 giropops-cron-1534979640   1         1            2m
 giropops-cron-1534979700   1         1            1m
@@ -1170,7 +1173,7 @@ spec:
     volumeMounts:
     - name: workdir
       mountPath: /usr/share/nginx/html
-  initContainers:
+  initContainers: # Executa ações antes de inicialização do pod
   - name: install
     image: busybox
     command: ['wget','-O','/work-dir/index.html','http://linuxtips.io']
@@ -1322,6 +1325,23 @@ kind: CertificateSigningRequest
 metadata:
   name: linuxtips-csr
 spec:
+  groups:
+  - system:authenticated
+  request: $(cat linuxtips.csr | base64 | tr -d '\n')
+  usages:
+  - client auth
+EOF
+```
+
+Kubernetes versão 1.19+
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: linuxtips-csr
+spec:
+  signerName: kubernetes.io/kube-apiserver-client
   groups:
   - system:authenticated
   request: $(cat linuxtips.csr | base64 | tr -d '\n')
@@ -1900,7 +1920,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /opt/prometheus
-    server: 10.138.0.2
+    server: 192.168.1.201
     readOnly: false
 ---
 apiVersion: v1
@@ -1915,7 +1935,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /opt/alertmanager
-    server: 10.138.0.2
+    server: 192.168.1.201
     readOnly: false
 
 ```

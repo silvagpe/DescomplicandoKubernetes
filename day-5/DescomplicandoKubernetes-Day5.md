@@ -21,6 +21,11 @@ Vamos criar nosso primeiro Ingress, mas primeiro vamos gerar dois deployments e 
 vim app1.yaml
 ```
 
+## Dica para criar o arquivo yaml
+```
+kubectl create deployment app1 --image=dockersamples/static-site --replicas=2 --port=80 --dry-run=client -o yaml > dry-run-app1.yaml
+```
+
 Informe o seguinte conteúdo:
 
 ```yaml
@@ -96,6 +101,13 @@ deployment.apps/app2 created
 ```
 vim svc-app1.yaml
 ```
+
+### Dica para criar o arquivo yaml
+
+```
+kubectl create service clusterip app2 --tcp=80:80 --dry-run=client -o yaml > svc-app2.yaml
+```
+
 
 Informe o seguinte conteúdo:
 
@@ -205,6 +217,9 @@ Vamos criar um deployment para o backend:
 
 ```
 vim default-backend.yaml
+
+kubectl create deployment default-backend --image=gcr.io/google_containers/defaultbackend:1.0 --replicas=2 --port=8080 --dry-run=client -o yaml > default-backend.yaml
+
 ```
 
 Informe o seguinte conteúdo:
@@ -365,7 +380,7 @@ metadata:
   labels:
     app: nginx-ingress-lb
 data:
-  enable-vts-status: 'true'
+  enable-vts-status: 'true'  # habilita o vts dentro do nginx
 ```
 
 Crie o configMap no namespace ``ingress``:
